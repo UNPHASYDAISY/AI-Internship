@@ -235,6 +235,20 @@ body{
             </div>
 
             <div class="card">
+                <div class="card-title">Caretaker To-Do List</div>
+                {% for todo in result.caretaker_todo %}
+                <div class="task">
+                    <div class="task-name">{{ todo.task }}</div>
+                    <div class="task-info"><strong>Priority:</strong> {{ todo.priority }}</div>
+                    <div class="task-info"><strong>Timing:</strong> {{ todo.timing }}</div>
+                    <div class="task-notes">{{ todo.notes }}</div>
+                </div>
+                {% else %}
+                <div class="task-notes">No caretaker tasks were found.</div>
+                {% endfor %}
+            </div>
+
+            <div class="card">
                 <div class="card-title">Additional Guidelines</div>
 
                 <div class="task-name" style="margin-top: 10px;">Diet Instructions</div>

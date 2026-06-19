@@ -19,6 +19,7 @@ class CaretakerTodo(BaseModel):
     diagnosis: str
     medications: List[CareTask]
     daily_care: List[CareTask]
+    caretaker_todo: List[CareTask]
     diet_instructions: List[str]
     warning_signs: List[str]
     follow_up: List[str]
@@ -51,13 +52,24 @@ def generate_todo(image_path: str) -> dict:
     prompt = f"""
 You are an intelligent medical caretaker assistant.
 Analyze this medical report, prescription, or medical document image carefully.
-Generate a structured caretaker TO-DO list.
+Generate a structured caretaker TO-DO list for the patient's caregiver.
 Return ONLY valid JSON matching this schema:
 
 {json.dumps(schema, indent=2)}
 
 Instructions:
 - Keep all tasks simple and actionable.
+- Create a separate caretaker_todo section with the main actions a caregiver should take.
+- Include medication reminders, mobility or daily care support, diet guidance, monitoring, and follow-up coordination.
+- Write at least 5 caregiver tasks when possible.
+- Each caretaker task should include a clear task title, priority, timing, and a detailed note describing why and how to do it.
+- Use the following style examples for content:
+  - Assist with Walking and Mobility
+  - Monitor Knee and Back Pain
+  - Prevent Lower Back Strain
+  - Ensure Medicines are Taken
+  - Encourage Hydration
+  - Watch for Worsening Symptoms
 - Medicines should include timing and importance.
 - Mention diet recommendations if available.
 - Mention warning signs to monitor.
