@@ -73,6 +73,34 @@ Open your browser at `http://127.0.0.1:5000/`.
 3. Upload a medical report or prescription image.
 4. Review the generated caretaker to-do list and additional guidance.
 
+### Testing with your own video
+
+You can test the computer-vision streaming with your own video file. By default the app looks for a hard-coded test file in `static/cv_assets/`.
+
+Steps:
+
+- Copy your MP4 file into `static/cv_assets/` (for example `my_test_video.mp4`).
+- Open `modules/cv/routes.py` and edit the `video_feed` handler to point to your filename. Locate this line:
+
+```python
+video_source = os.path.join(current_app.root_path, 'static', 'cv_assets', 'abc.mp4')
+```
+
+Replace `abc.mp4` with your file name, for example:
+
+```python
+video_source = os.path.join(current_app.root_path, 'static', 'cv_assets', 'my_test_video.mp4')
+```
+
+- Restart the Flask app and visit the dashboard at `http://127.0.0.1:5000/cv/` or directly stream the feed at:
+
+```
+http://127.0.0.1:5000/cv/video_feed/file
+```
+
+Note: passing any `<source>` other than `camera` will cause the route to use the hard-coded file path, so updating the filename in `modules/cv/routes.py` is required unless you modify the route logic.
+
+
 ## Notes
 
 - If the app fails to read the image, confirm the file is a supported format: `png`, `jpg`, or `jpeg`.
